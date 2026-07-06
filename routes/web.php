@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\HistoryController;
 
 // 1. Halaman Depan (Login / Register terintegrasi yang Anda buat)
 Route::get('/', function () {
@@ -33,7 +36,11 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
         return view('admin'); // Memanggil file resources/views/admin.blade.php
     })->name('admin.dashboard');
     
-    // Anda bisa meletakkan rute manajemen barang, sortir aset, dan kelola staff di sini nanti
+    Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.products.store');
+
+    Route::put('/admin/products/{id}', [ProductController::class, 'update'])->name('admin.products.update');
+
+    Route::delete('/admin/products/{id}', [ProductController::class, 'destroy'])->name('admin.products.destroy');
 });
 
 // 4. Placeholder Proteksi Halaman Staff & Manager (Guna persiapan langkah berikutnya)
@@ -43,6 +50,30 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
 
 Route::middleware(['auth', 'role:Manager'])->group(function () {
     Route::get('/manager/dashboard', function () { return "Dashboard Manager - Dalam Pengembangan"; })->name('manager.dashboard');
+});
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/dashboard', function () { return view('admin'); })->name('admin.dashboard');
+    
+    // Rute Master Data Logistik Baru
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
+});
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/dashboard', function () { return view('admin'); })->name('admin.dashboard');
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
+    
+    // Rute Halaman Transaksi Baru
+    Route::get('/admin/transactions', [TransactionController::class, 'index'])->name('admin.transactions.index');
+});
+
+Route::middleware(['auth', 'role:Admin'])->group(function () {
+    Route::get('/admin/dashboard', function () { return view('admin'); })->name('admin.dashboard');
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
+    Route::get('/admin/transactions', [TransactionController::class, 'index'])->name('admin.transactions.index');
+    
+    // Rute Halaman Riwayat Baru
+    Route::get('/admin/history', [HistoryController::class, 'index'])->name('admin.history.index');
 });
 
 require __DIR__.'/auth.php';

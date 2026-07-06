@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Dasbor Admin | Telkomsel T-Track</title>
+    <title>Riwayat Logistik | Telkomsel T-Track</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
@@ -117,7 +117,7 @@
 
         <div class="space-y-1">
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">General</p>
-            <a class="flex items-center gap-3 px-4 py-3 text-red-600 bg-red-50 dark:bg-red-950/20 font-bold rounded-xl transition-colors" href="#">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.dashboard') }}">
                 <span class="material-symbols-outlined">dashboard</span>
                 <span class="text-xs tracking-wide">Dashboard Admin</span>
             </a>
@@ -129,7 +129,7 @@
                 <span class="material-symbols-outlined">swap_horiz</span>
                 <span class="text-xs tracking-wide">Transaksi</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.history.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-red-600 bg-red-50 dark:bg-red-950/20 font-bold rounded-xl transition-colors" href="#">
                 <span class="material-symbols-outlined">history</span>
                 <span class="text-xs tracking-wide">Riwayat</span>
             </a>
@@ -166,7 +166,7 @@
             <nav class="flex items-center gap-2 text-xs font-bold tracking-wide">
                 <span class="text-gray-400">Pages</span>
                 <span class="text-gray-300">/</span>
-                <span class="text-gray-900 dark:text-white">Dashboard Internal</span>
+                <span class="text-gray-900 dark:text-white">Jurnal Riwayat</span>
             </nav>
         </div>
         
@@ -192,152 +192,87 @@
 
     <main class="ml-64 p-8 min-h-screen">
         
-        <section class="pro-gradient rounded-[24px] p-8 mb-8 text-white relative overflow-hidden flex justify-between items-center group shadow-lg shadow-red-900/5">
-            <div class="relative z-10 space-y-2">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
-                    <p class="text-[10px] font-black uppercase tracking-widest opacity-90">Kredensial Otoritas Tinggi Terverifikasi</p>
-                </div>
-                <h2 class="text-2xl font-black tracking-tight max-w-xl">Selamat Datang di Portal Manajemen Inventaris Telkomsel T-Track</h2>
-                <p class="text-xs opacity-80 font-normal">Anda memiliki akses penuh sebagai {{ Auth::user()->role->name }} untuk memantau status penyortiran barang dan mengesahkan mutasi logistik.</p>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div>
+                <h2 class="text-xl font-black tracking-tight text-gray-950 dark:text-white">Jurnal Riwayat & Audit Log</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Arsip permanen aktivitas mutasi logistik dan pengembalian barang terotentikasi.</p>
             </div>
-            <div class="absolute -right-20 -top-20 w-80 h-80 bg-white/5 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-        </section>
-
-        <div class="flex justify-between items-end mb-6">
-            <h2 class="text-lg font-black tracking-tight text-gray-950 dark:text-white">Statistik Global Sortir</h2>
-            <div class="flex items-center gap-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 px-4 py-2 rounded-xl text-xs font-bold text-gray-600">
-                <span class="material-symbols-outlined text-sm">calendar_today</span> Real-time Data Tracker
+            
+            <div class="flex items-center gap-2">
+                <button title="Unduh Excel" class="inline-flex items-center gap-1.5 text-xs font-bold text-green-700 bg-green-50 border border-green-200 dark:border-green-900/30 dark:bg-green-950/20 px-4 py-2.5 rounded-full hover:bg-green-600 hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-sm">description</span> Export Excel
+                </button>
+                <button title="Unduh PDF" class="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 bg-red-50 border border-red-200 dark:border-red-900/30 dark:bg-red-950/20 px-4 py-2.5 rounded-full hover:bg-red-600 hover:text-white transition-all">
+                    <span class="material-symbols-outlined text-sm">picture_as_pdf</span> Cetak PDF
+                </button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div class="glass-card p-5 rounded-[20px]">
-                <div class="flex justify-between items-start mb-3">
-                    <div class="w-9 h-9 bg-red-50 dark:bg-red-950/40 rounded-xl flex items-center justify-center text-red-600 shadow-sm">
-                        <span class="material-symbols-outlined text-lg">inventory_2</span>
-                    </div>
-                </div>
-                <p class="text-gray-400 font-bold text-[10px] uppercase tracking-wider mb-1">Total Aset Masuk</p>
-                <h3 class="text-xl font-black text-gray-950 dark:text-white tracking-tight">124,542 <span class="text-xs font-medium text-gray-400">Unit</span></h3>
-                <p class="text-[10px] font-bold text-green-600 mt-1 flex items-center gap-1">
-                    <span class="material-symbols-outlined text-xs">trending_up</span> +14% <span class="font-medium text-gray-400">bulan ini</span>
-                </p>
-            </div>
-            <div class="glass-card p-5 rounded-[20px]">
-                <div class="flex justify-between items-start mb-3">
-                    <div class="w-9 h-9 bg-red-50 dark:bg-red-950/40 rounded-xl flex items-center justify-center text-red-600 shadow-sm">
-                        <span class="material-symbols-outlined text-lg">done_all</span>
-                    </div>
-                </div>
-                <p class="text-gray-400 font-bold text-[10px] uppercase tracking-wider mb-1">Selesai Disortir</p>
-                <h3 class="text-xl font-black text-gray-950 dark:text-white tracking-tight">98,210 <span class="text-xs font-medium text-gray-400">Unit</span></h3>
-                <p class="text-[10px] font-bold text-green-600 mt-1 flex items-center gap-1">
-                    <span class="material-symbols-outlined text-xs">trending_up</span> +8% <span class="font-medium text-gray-400">efisiensi meningkat</span>
-                </p>
-            </div>
-            <div class="glass-card p-5 rounded-[20px]">
-                <div class="flex justify-between items-start mb-3">
-                    <div class="w-9 h-9 bg-red-50 dark:bg-red-950/40 rounded-xl flex items-center justify-center text-red-600 shadow-sm">
-                        <span class="material-symbols-outlined text-lg">pending_actions</span>
-                    </div>
-                </div>
-                <p class="text-gray-400 font-bold text-[10px] uppercase tracking-wider mb-1">Tertunda (Pending)</p>
-                <h3 class="text-xl font-black text-gray-950 dark:text-white tracking-tight">26,332 <span class="text-xs font-medium text-gray-400">Unit</span></h3>
-                <p class="text-[10px] font-bold text-amber-600 mt-1 flex items-center gap-1">
-                    <span class="material-symbols-outlined text-xs">hourglass_empty</span> Butuh Operator Tambahan
-                </p>
-            </div>
-            <div class="glass-card p-5 rounded-[20px]">
-                <div class="flex justify-between items-start mb-3">
-                    <div class="w-9 h-9 bg-red-50 dark:bg-red-950/40 rounded-xl flex items-center justify-center text-red-600 shadow-sm">
-                        <span class="material-symbols-outlined text-lg">gavel</span>
-                    </div>
-                </div>
-                <p class="text-gray-400 font-bold text-[10px] uppercase tracking-wider mb-1">Aset Rusak/Karantina</p>
-                <h3 class="text-xl font-black text-gray-950 dark:text-white tracking-tight">1,404 <span class="text-xs font-medium text-gray-400">Unit</span></h3>
-                <p class="text-[10px] font-bold text-red-600 mt-1 flex items-center gap-1">
-                    <span class="material-symbols-outlined text-xs">warning</span> Menunggu Berita Acara
-                </p>
-            </div>
+        <div class="glass-card rounded-[24px] p-4 mb-6">
+            <form action="{{ route('admin.history.index') }}" method="GET" class="w-full sm:w-80 relative">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode TRX atau nama peminjam..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 text-xs font-medium focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none transition-all">
+                <span class="material-symbols-outlined text-gray-400 text-lg absolute left-3 top-2.5">search</span>
+            </form>
         </div>
 
         <div class="glass-card rounded-[24px] overflow-hidden mb-12">
-            <div class="p-6 pb-0 border-b border-outline-variant">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-base font-black text-gray-950 dark:text-white tracking-tight">Log Aktivitas Penyortiran Terbaru</h3>
-                    <div class="flex items-center gap-2">
-                        <button class="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 bg-red-50 dark:bg-red-950/30 px-4 py-2 rounded-full hover:bg-red-600 hover:text-white transition-all">
-                            <span class="material-symbols-outlined text-sm">visibility</span> Lihat Semua
-                        </button>
-                    </div>
-                </div>
-                <div class="flex items-center gap-6 overflow-x-auto scrollbar-hide text-xs font-bold tracking-wide">
-                    <button class="pb-3 text-red-600 border-b-2 border-red-600 whitespace-nowrap">Semua Tugas</button>
-                    <button class="pb-3 text-gray-400 hover:text-gray-900 whitespace-nowrap transition-colors">Selesai Sortir</button>
-                    <button class="pb-3 text-gray-400 hover:text-gray-900 whitespace-nowrap transition-colors flex items-center gap-1.5">
-                        Menunggu Persetujuan Admin
-                        <span class="bg-red-600 px-1.5 py-0.5 rounded-md text-[9px] text-white">2</span>
-                    </button>
-                </div>
-            </div>
-
             <div class="overflow-x-auto">
-                <table class="w-full text-left">
+                <table class="w-full text-left border-collapse">
                     <thead class="bg-gray-50/70 dark:bg-gray-900 text-gray-400 text-[10px] uppercase tracking-widest font-bold border-b border-gray-100 dark:border-gray-800">
                         <tr>
-                            <th class="px-6 py-4 font-black">Operator Lapangan</th>
-                            <th class="px-4 py-4 font-black">Tanggal Masuk</th>
-                            <th class="px-4 py-4 font-black">Volume Aset</th>
-                            <th class="px-4 py-4 font-black">Kategori Logistik</th>
-                            <th class="px-4 py-4 font-black">Deskripsi Muatan</th>
-                            <th class="px-4 py-4 font-black">Status Validasi</th>
+                            <th class="px-6 py-4 font-black">ID Transaksi</th>
+                            <th class="px-4 py-4 font-black">Nama Peminjam</th>
+                            <th class="px-4 py-4 font-black">Tanggal Pinjam</th>
+                            <th class="px-4 py-4 font-black">Tanggal Kembali</th>
+                            <th class="px-4 py-4 font-black">Pemeriksa (Staff)</th>
+                            <th class="px-4 py-4 font-black">Status Transaksi</th>
                             <th class="px-6 py-4 font-black"></th>
                         </tr>
                     </thead>
                     <tbody class="text-xs divide-y divide-gray-100 dark:divide-gray-800 font-medium text-gray-700 dark:text-gray-300">
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-gray-950 dark:text-white">Savannah Nguyen</td>
-                            <td class="px-4 py-4 text-gray-400">07/05/2026</td>
-                            <td class="px-4 py-4 font-bold">2,500 Pcs</td>
-                            <td class="px-4 py-4">Network Device</td>
-                            <td class="px-4 py-4 text-gray-400 truncate max-w-[150px]">ONT Modems Huawei HG8245H5...</td>
+                        @forelse($history as $log)
+                        <tr class="hover:bg-gray-50/50 dark:hover:bg-gray-100/30 transition-colors">
+                            <td class="px-6 py-4 font-bold text-red-600 dark:text-red-400">#TRX-{{ str_pad($log->id, 5, '0', STR_PAD_LEFT) }}</td>
+                            <td class="px-4 py-4 font-bold text-gray-950 dark:text-white">{{ $log->borrower_name }}</td>
+                            <td class="px-4 py-4 text-gray-400">{{ \Carbon\Carbon::parse($log->borrow_date)->format('d/m/Y') }}</td>
+                            <td class="px-4 py-4 text-green-600 dark:text-green-400 font-semibold">{{ \Carbon\Carbon::parse($log->return_date)->format('d/m/Y') }}</td>
+                            <td class="px-4 py-4">{{ $log->user->name }}</td>
                             <td class="px-4 py-4">
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-bold bg-green-50 text-green-700 border border-green-200 dark:border-green-900/30 dark:bg-green-950/20">
-                                    <span class="w-1 h-1 rounded-full bg-green-700"></span> Disetujui
+                                    <span class="w-1 h-1 rounded-full bg-green-700"></span> Dikembalikan
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right">
-                                <button class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg"><span class="material-symbols-outlined text-sm">more_horiz</span></button>
+                                <button title="Lihat Rekam Jurnal" class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors">
+                                    <span class="material-symbols-outlined text-sm">receipt_long</span>
+                                </button>
                             </td>
                         </tr>
-                        <tr class="hover:bg-gray-50/50 transition-colors">
-                            <td class="px-6 py-4 font-bold text-gray-950 dark:text-white">Jerome Bell</td>
-                            <td class="px-4 py-4 text-gray-400">07/05/2026</td>
-                            <td class="px-4 py-4 font-bold">450 Pcs</td>
-                            <td class="px-4 py-4">Infrastructure</td>
-                            <td class="px-4 py-4 text-gray-400 truncate max-w-[150px]">Kabel FO Drop Core 1 Core...</td>
-                            <td class="px-4 py-4">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-200 dark:border-amber-900/30 dark:bg-amber-950/20">
-                                    <span class="w-1 h-1 rounded-full bg-amber-700"></span> Pending Admin
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 text-right">
-                                <button class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg"><span class="material-symbols-outlined text-sm">more_horiz</span></button>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-12 text-gray-400">
+                                <span class="material-symbols-outlined text-3xl block mb-2">history_toggle_off</span>
+                                Belum ada arsip riwayat transaksi yang diselesaikan.
                             </td>
                         </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+
+            @if($history->hasPages())
+            <div class="p-4 border-t border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/40">
+                {{ $history->appends(request()->query())->links() }}
+            </div>
+            @endif
         </div>
     </main>
 
     <script>
-        // Logika Pengendali Dark Mode Otomatis
+        // Logika Pengendali Dark Mode Otomatis (Sinkron penuh via LocalStorage)
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-        // Mengatur ikon tombol di awal pemuatan berdasarkan tema saat ini
         if (document.documentElement.classList.contains('dark')) {
             themeToggleLightIcon.classList.remove('hidden');
         } else {
@@ -347,11 +282,9 @@
         const themeToggleBtn = document.getElementById('theme-toggle');
 
         themeToggleBtn.addEventListener('click', function() {
-            // Tukar ikon visibilitas
             themeToggleDarkIcon.classList.toggle('hidden');
             themeToggleLightIcon.classList.toggle('hidden');
 
-            // Jalankan perubahan class tema pada tag HTML & Simpan State ke LocalStorage
             if (document.documentElement.classList.contains('dark')) {
                 document.documentElement.classList.remove('dark');
                 document.documentElement.classList.add('light');
@@ -362,15 +295,6 @@
                 localStorage.setItem('theme', 'dark');
             }
         });
-
-        // Fungsi Menutup Sukses Modal
-        function closeModal() {
-            const modal = document.getElementById('success-modal');
-            if (modal) {
-                modal.classList.add('opacity-0', 'pointer-events-none');
-                setTimeout(() => { modal.remove(); }, 300);
-            }
-        }
 
         // Efek Hover Mikro Kartu Statistik
         document.querySelectorAll('.glass-card').forEach(card => {
