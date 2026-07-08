@@ -105,7 +105,7 @@
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">Sistem Akses</p>
             <a class="flex items-center gap-3 px-4 py-3 text-red-600 bg-red-50 dark:bg-red-950/20 font-bold rounded-xl transition-colors" href="#">
                 <span class="material-symbols-outlined">group</span>
-                <span class="text-xs tracking-wide">Kelola Akun Staff</span>
+                <span class="text-xs tracking-wide">Kelola Akun</span>
                 <span class="ml-auto text-[10px] bg-gray-100 dark:bg-gray-800 font-bold px-1.5 py-0.5 rounded-md">{{ $users->total() }}</span>
             </a>
         </div>
@@ -133,7 +133,7 @@
             <nav class="flex items-center gap-2 text-xs font-bold tracking-wide">
                 <span class="text-gray-400">Pages</span>
                 <span class="text-gray-300">/</span>
-                <span class="text-gray-900 dark:text-white">Kelola Akun Staff</span>
+                <span class="text-gray-900 dark:text-white">Kelola Akun</span>
             </nav>
         </div>
         

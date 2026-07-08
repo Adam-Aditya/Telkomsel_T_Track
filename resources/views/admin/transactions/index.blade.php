@@ -104,7 +104,7 @@
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">Sistem Akses</p>
             <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.users.index') }}">
                 <span class="material-symbols-outlined">group</span>
-                <span class="text-xs tracking-wide">Kelola Akun Staff</span>
+                <span class="text-xs tracking-wide">Kelola Akun</span>
                 <span class="ml-auto text-[10px] bg-gray-100 dark:bg-gray-800 font-bold px-1.5 py-0.5 rounded-md">{{ \App\Models\User::count() }}</span>
             </a>
         </div>

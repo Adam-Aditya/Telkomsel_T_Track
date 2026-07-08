@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany; // 🟢 TAMBAHKAN INI
 
 class User extends Authenticatable
 {
@@ -46,6 +47,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * 🟢 TAMBAHKAN INI: Relasi One-to-Many ke Model Borrowing
+     * Menyatakan bahwa satu User/Staff bisa melakukan banyak transaksi sirkulasi.
+     */
+    public function borrowings(): HasMany
+    {
+        return $this->hasMany(Borrowing::class, 'user_id');
     }
 
     /**

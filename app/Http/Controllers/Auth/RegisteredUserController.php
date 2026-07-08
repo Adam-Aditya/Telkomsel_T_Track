@@ -51,13 +51,16 @@ class RegisteredUserController extends Controller
         // Load relasi role agar Laravel bisa membaca nama role dari tabel roles
         $user->load('role');
 
-        // 🟢 PROSES PENGALIHAN (REDIRECT) BERDASARKAN ROLE
         if ($user->role && $user->role->name === 'Admin') {
             return redirect()->route('admin.dashboard');
         }
 
         if ($user->role && $user->role->name === 'Staff') {
             return redirect()->route('staff.dashboard');
+        }
+
+        if ($user->role && $user->role->name === 'Manager') {
+            return redirect()->route('manager.dashboard');
         }
 
         // Fallback jika role tidak spesifik atau tidak ditemukan

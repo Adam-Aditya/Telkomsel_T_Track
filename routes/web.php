@@ -11,6 +11,10 @@ use App\Http\Controllers\Staff\StaffDashboardController;
 use App\Http\Controllers\Staff\StaffProductController;
 use App\Http\Controllers\Staff\StaffTransactionController;
 use App\Http\Controllers\Staff\StaffHistoryController;
+use App\Http\Controllers\Manager\DashboardManagerController;
+use App\Http\Controllers\Manager\ManagerReportController;
+use App\Http\Controllers\Manager\ManagerProductController;
+use App\Http\Controllers\Manager\ManagerStaffController;
 
 // ==========================================
 // 1. Halaman Depan / Welcome
@@ -88,7 +92,17 @@ Route::middleware(['auth', 'role:Staff'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:Manager'])->group(function () {
-    Route::get('/manager/dashboard', function () { return "Dashboard Manager - Dalam Pengembangan"; })->name('manager.dashboard');
+    Route::get('/manager/dashboard', [DashboardManagerController::class, 'index'])->name('manager.dashboard');
+    
+    // Placeholder rute menu sidebar manager agar link aman dari error
+    Route::get('/manager/reports', function() { return 'Halaman Laporan'; })->name('manager.reports.index');
+    Route::get('/manager/products', function() { return 'Halaman Monitoring Stok'; })->name('manager.products.index');
+    Route::get('/manager/staff', function() { return 'Halaman Aktivitas Tim Staff'; })->name('manager.staff.index');
+
+    Route::get('/manager/reports', [ManagerReportController::class, 'index'])->name('manager.reports.index');
+    
+    Route::get('/manager/products', [ManagerProductController::class, 'index'])->name('manager.products.index');
+    Route::get('/manager/staff', [ManagerStaffController::class, 'index'])->name('manager.staff.index');
 });
 
 // ==========================================
