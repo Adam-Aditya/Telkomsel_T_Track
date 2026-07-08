@@ -28,7 +28,21 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+        
+        // Load relasi role untuk memastikan nama role terbaca dari DB
+        $user = \App\Models\User::with('role')->find(Auth::id());
+        
+        if ($user->role && $user->role->name === 'Admin') {
+            return redirect()->route('admin.dashboard');
+        }
+        
+        if ($user->role && $user->role->name === 'Staff') {
+            return redirect()->route('staff.dashboard');
+        }
+
+        // 🟢 GANTI BARIS YANG EROR MENJADI FALLBACK STRING AMAN INI:
+        return redirect()->intended('/'); 
     }
 
     /**

@@ -16,6 +16,7 @@ class Product extends Model
         'storage_location',
         'condition',
         'image',
+        'storage_location',
     ];
 
     /**

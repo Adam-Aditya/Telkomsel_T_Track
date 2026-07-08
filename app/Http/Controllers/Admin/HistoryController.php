@@ -11,16 +11,20 @@ class HistoryController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $statusFilter = $request->get('status');
 
-        // Mengambil riwayat sirkulasi yang sudah 'Selesai' (dikembalikan)
+        // Tarik data seluruh riwayat sirkulasi beserta detail barang dan user
         $history = Borrowing::with(['user', 'details.product'])
-            ->where('status', 'Selesai')
             ->when($search, function($query) use ($search) {
-                return $query->where('borrower_name', 'LIKE', "%{$search}%")
-                             ->orWhere('id', 'LIKE', "%{$search}%");
+                return $query->whereHas('user', function($q) use ($search) {
+                    $q->where('name', 'LIKE', "%{$search}%");
+                });
+            })
+            ->when($statusFilter, function($query) use ($statusFilter) {
+                return $query->where('status', $statusFilter);
             })
             ->latest()
-            ->paginate(10);
+            ->paginate(15); // Menampilkan 15 riwayat per halaman
 
         return view('admin.history.index', compact('history'));
     }

@@ -3,9 +3,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Jurnal Audit Riwayat | Telkomsel T-Track</title>
+    <title>Jurnal Audit Riwayat | Telkomsel T-Track Staff</title>
     
-    <!-- Tailwind CSS & Fonts (Diselaraskan dengan Dashboard Utama & Logistik) -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +59,6 @@
         }
     </style>
     
-    <!-- Script pencegah flash putih agar tersinkronisasi instan dari localStorage -->
     <script>
         if (localStorage.getItem('theme') === 'dark') {
             document.documentElement.classList.add('dark');
@@ -73,7 +71,6 @@
 </head>
 <body class="text-on-surface antialiased">
 
-    <!-- SIDEBAR KIRI (Sinkron Penuh dengan Dashboard, Logistik, & Transaksi) -->
     <aside class="w-64 h-screen fixed left-0 top-0 bg-white border-r border-outline-variant flex flex-col py-6 px-4 space-y-2 z-50 overflow-y-auto no-print">
         <div class="flex items-center gap-2.5 px-2 mb-8">
             <img src="{{ asset('images/telkomsel.svg') }}" alt="Logo Telkomsel" class="h-6 w-auto block object-contain select-none">
@@ -84,32 +81,22 @@
 
         <div class="space-y-1">
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">General</p>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.dashboard') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('staff.dashboard') }}">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="text-xs tracking-wide">Dashboard Admin</span>
+                <span class="text-xs tracking-wide">Dashboard Saya</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.products.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('staff.products.index') }}">
                 <span class="material-symbols-outlined">inventory_2</span>
                 <span class="text-xs tracking-wide">Master Data Logistik</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.transactions.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('staff.transactions.index') }}">
                 <span class="material-symbols-outlined">swap_horiz</span>
                 <span class="text-xs tracking-wide">Transaksi</span>
             </a>
             
-            <!-- Riwayat Aktif -->
             <a class="flex items-center gap-3 px-4 py-3 text-red-600 bg-red-50 dark:bg-red-950/20 font-bold rounded-xl transition-colors" href="#">
                 <span class="material-symbols-outlined">history</span>
                 <span class="text-xs tracking-wide">Riwayat</span>
-            </a>
-        </div>
-
-        <div class="pt-4 space-y-1">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">Sistem Akses</p>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.users.index') }}">
-                <span class="material-symbols-outlined">group</span>
-                <span class="text-xs tracking-wide">Kelola Akun Staff</span>
-                <span class="ml-auto text-[10px] bg-gray-100 dark:bg-gray-800 font-bold px-1.5 py-0.5 rounded-md">{{ \App\Models\User::count() }}</span>
             </a>
         </div>
 
@@ -130,63 +117,49 @@
         </div>
     </aside>
 
-    <!-- HEADER (Sinkron dengan Tombol Pengendali Dark Mode) -->
     <header class="h-16 w-full sticky top-0 z-40 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md border-b border-outline-variant/60 flex justify-between items-center px-8 ml-64 max-w-[calc(100%-16rem)] no-print">
         <div class="flex items-center gap-2 text-gray-400">
             <nav class="flex items-center gap-2 text-xs font-bold tracking-wide">
                 <span class="text-gray-400">Pages</span>
                 <span class="text-gray-300">/</span>
-                <span class="text-gray-900 dark:text-white">Jurnal Riwayat</span>
+                <span class="text-gray-900 dark:text-white">Jurnal Riwayat Staff</span>
             </nav>
         </div>
         
         <div class="flex items-center gap-4">
-            <!-- 🌗 TOMBOL TOGGLE DARK MODE SINKRON -->
             <button id="theme-toggle" class="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-all flex items-center justify-center">
                 <span id="theme-toggle-dark-icon" class="material-symbols-outlined text-xl hidden">dark_mode</span>
                 <span id="theme-toggle-light-icon" class="material-symbols-outlined text-xl hidden">light_mode</span>
             </button>
-
-            <!-- TOMBOL NOTIFIKASI -->
-            <button class="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-all">
-                <span class="material-symbols-outlined text-xl">notifications</span>
-            </button>
-            
             <div class="w-px h-5 bg-gray-200 dark:bg-gray-800"></div>
             <div class="flex items-center gap-2.5 pl-2">
                 <div class="text-right hidden xl:block">
                     <p class="text-xs font-black text-gray-900 dark:text-white">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] text-gray-400 font-semibold">{{ Auth::user()->role->name }} T-Track</p>
+                    <p class="text-[10px] text-gray-400 font-semibold">Staff Lapangan T-Track</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- MAIN WORKSPACE CONTENT -->
     <main class="ml-64 p-8 min-h-screen">
         
-        <!-- Action Header Row -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
                 <h2 class="text-xl font-black tracking-tight text-gray-950 dark:text-white">Jurnal Audit Riwayat</h2>
                 <p class="text-xs text-gray-400 mt-0.5">Arsip riwayat sirkulasi dan status final logistik distribusi perangkat Telkomsel.</p>
             </div>
-            <!-- Tombol Cetak Dokumen -->
             <button onclick="window.print()" class="inline-flex items-center gap-2 text-xs font-black bg-gray-950 dark:bg-gray-800 text-white px-5 py-3 rounded-full hover:bg-black no-print shadow-md transition-all">
                 <span class="material-symbols-outlined text-sm">print</span> Cetak Laporan Audit
             </button>
         </div>
 
-        <!-- Filter & Search Card Section (hidden on print) -->
         <div class="glass-card rounded-[24px] p-4 mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center no-print">
-            <form action="{{ route('admin.history.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full">
-                <!-- Input Cari Nama Peminjam -->
+            <form action="{{ route('staff.history.index') }}" method="GET" class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center w-full">
                 <div class="relative flex-1 max-w-xs">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama peminjam..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 text-xs font-medium focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none transition-all">
                     <span class="material-symbols-outlined text-gray-400 text-lg absolute left-3 top-2.5">search</span>
                 </div>
 
-                <!-- Dropdown Filter Status -->
                 <div class="w-full sm:w-44">
                     <select name="status" onchange="this.form.submit()" class="w-full px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 text-xs font-bold focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none transition-all cursor-pointer">
                         <option value="">Semua Status</option>
@@ -196,14 +169,12 @@
                     </select>
                 </div>
 
-                <!-- Tombol Reset Filter -->
                 @if(request('search') || request('status'))
-                    <a href="{{ route('admin.history.index') }}" class="inline-flex items-center justify-center text-xs font-bold text-gray-500 hover:text-red-600 px-3 transition-colors">Reset Filter</a>
+                    <a href="{{ route('staff.history.index') }}" class="inline-flex items-center justify-center text-xs font-bold text-gray-500 hover:text-red-600 px-3 transition-colors">Reset Filter</a>
                 @endif
             </form>
         </div>
 
-        <!-- Data Audit Table Layout -->
         <div class="glass-card rounded-[24px] overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -276,7 +247,6 @@
         </div>
     </main>
 
-    <!-- Script Kontrol Transisi TEMA & MIKRO-INTERAKSI SINKRON -->
     <script>
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');

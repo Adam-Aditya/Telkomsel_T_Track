@@ -48,6 +48,19 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Load relasi role agar Laravel bisa membaca nama role dari tabel roles
+        $user->load('role');
+
+        // 🟢 PROSES PENGALIHAN (REDIRECT) BERDASARKAN ROLE
+        if ($user->role && $user->role->name === 'Admin') {
+            return redirect()->route('admin.dashboard');
+        }
+
+        if ($user->role && $user->role->name === 'Staff') {
+            return redirect()->route('staff.dashboard');
+        }
+
+        // Fallback jika role tidak spesifik atau tidak ditemukan
         return redirect(route('dashboard', absolute: false));
     }
 }

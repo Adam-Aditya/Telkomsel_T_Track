@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Sirkulasi Transaksi | Telkomsel T-Track</title>
+    <title>Sirkulasi Transaksi Saya | Telkomsel T-Track Staff</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -81,11 +81,11 @@
 
         <div class="space-y-1">
             <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">General</p>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.dashboard') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('staff.dashboard') }}">
                 <span class="material-symbols-outlined">dashboard</span>
-                <span class="text-xs tracking-wide">Dashboard Admin</span>
+                <span class="text-xs tracking-wide">Dashboard Saya</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.products.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('staff.products.index') }}">
                 <span class="material-symbols-outlined">inventory_2</span>
                 <span class="text-xs tracking-wide">Master Data Logistik</span>
             </a>
@@ -94,18 +94,10 @@
                 <span class="material-symbols-outlined">swap_horiz</span>
                 <span class="text-xs tracking-wide">Transaksi</span>
             </a>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.history.index') }}">
+            <a class="flex items-center gap-3 px-4 py-3 {{ Request::routeIs('staff.history.index') ? 'text-red-600 bg-red-50 dark:bg-red-950/20 font-bold' : 'text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold' }} rounded-xl transition-colors" 
+            href="{{ route('staff.history.index') }}">
                 <span class="material-symbols-outlined">history</span>
                 <span class="text-xs tracking-wide">Riwayat</span>
-            </a>
-        </div>
-
-        <div class="pt-4 space-y-1">
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest px-3 py-2">Sistem Akses</p>
-            <a class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 font-semibold rounded-xl transition-colors" href="{{ route('admin.users.index') }}">
-                <span class="material-symbols-outlined">group</span>
-                <span class="text-xs tracking-wide">Kelola Akun Staff</span>
-                <span class="ml-auto text-[10px] bg-gray-100 dark:bg-gray-800 font-bold px-1.5 py-0.5 rounded-md">{{ \App\Models\User::count() }}</span>
             </a>
         </div>
 
@@ -131,7 +123,7 @@
             <nav class="flex items-center gap-2 text-xs font-bold tracking-wide">
                 <span class="text-gray-400">Pages</span>
                 <span class="text-gray-300">/</span>
-                <span class="text-gray-900 dark:text-white">Sirkulasi Transaksi</span>
+                <span class="text-gray-900 dark:text-white">Transaksi Saya</span>
             </nav>
         </div>
         
@@ -140,16 +132,11 @@
                 <span id="theme-toggle-dark-icon" class="material-symbols-outlined text-xl hidden">dark_mode</span>
                 <span id="theme-toggle-light-icon" class="material-symbols-outlined text-xl hidden">light_mode</span>
             </button>
-
-            <button class="p-2 text-gray-500 hover:text-red-600 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-full transition-all">
-                <span class="material-symbols-outlined text-xl">notifications</span>
-            </button>
-            
             <div class="w-px h-5 bg-gray-200 dark:bg-gray-800"></div>
             <div class="flex items-center gap-2.5 pl-2">
                 <div class="text-right hidden xl:block">
                     <p class="text-xs font-black text-gray-900 dark:text-white">{{ Auth::user()->name }}</p>
-                    <p class="text-[10px] text-gray-400 font-semibold">{{ Auth::user()->role->name }} T-Track</p>
+                    <p class="text-[10px] text-gray-400 font-semibold">Staff Lapangan T-Track</p>
                 </div>
             </div>
         </div>
@@ -159,19 +146,18 @@
         
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
-                <h2 class="text-xl font-black tracking-tight text-gray-950 dark:text-white">Alur Sirkulasi Aset</h2>
-                <p class="text-xs text-gray-400 mt-0.5">Pantau pendistribusian operasional peminjaman dan otorisasi pengembalian logistik internal.</p>
+                <h2 class="text-xl font-black tracking-tight text-gray-950 dark:text-white">Alur Sirkulasi Aset Personal</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Ajukan permintaan peminjaman material lapangan dan lakukan konfirmasi pengembalian mandiri.</p>
             </div>
             <button onclick="openTransactionModal()" class="inline-flex items-center gap-2 text-xs font-black bg-red-600 text-white px-5 py-3 rounded-full hover:bg-red-700 shadow-md shadow-red-600/10 transition-all">
-                <span class="material-symbols-outlined text-sm">add_shopping_cart</span> Buat Transaksi Baru
+                <span class="material-symbols-outlined text-sm">add_shopping_cart</span> Buat Pengajuan Baru
             </button>
         </div>
 
         <div class="glass-card rounded-[24px] p-4 mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <form action="{{ route('admin.transactions.index') }}" method="GET" class="w-full sm:w-80 relative">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama peminjam..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900 text-xs font-medium focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none transition-all">
-                <span class="material-symbols-outlined text-gray-400 text-lg absolute left-3 top-2.5">search</span>
-            </form>
+            <div class="text-xs font-bold text-gray-500 dark:text-gray-400">
+                Menampilkan log sirkulasi perangkat khusus akun Anda.
+            </div>
         </div>
 
         <div class="glass-card rounded-[24px] overflow-hidden">
@@ -205,13 +191,14 @@
                             </td>
                             <td class="px-4 py-4 text-gray-400">{{ \Carbon\Carbon::parse($trans->borrow_date)->format('d/m/Y') }}</td>
                             <td class="px-4 py-4 text-gray-400">{{ $trans->return_date ? \Carbon\Carbon::parse($trans->return_date)->format('d/m/Y') : '-' }}</td>
- 
+                        
+
                             <td class="px-4 py-4">
                                 <span class="font-semibold text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-md text-[11px]">
                                     {{ $trans->user->role->name ?? 'Staff' }}
                                 </span>
                             </td>
-                            
+                                                        
                             <td class="px-4 py-4">
                                 @if($trans->status === 'Dipinjam')
                                     <span class="px-2.5 py-1 rounded-full text-[9px] font-bold bg-amber-50 text-amber-700 border border-amber-200 dark:border-amber-900/20 dark:bg-amber-950/20">Dipinjam</span>
@@ -266,7 +253,7 @@
                 </button>
             </div>
 
-            <form action="{{ route('admin.transactions.store') }}" method="POST" class="space-y-4 text-xs">
+            <form action="{{ route('staff.transactions.store') }}" method="POST" class="space-y-4 text-xs">
                 @csrf
                 
                 <div class="space-y-1.5">
@@ -318,7 +305,6 @@
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
-        // Sinkronisasi Ikon Tombol Tema Saat Halaman Dimuat
         if (document.documentElement.classList.contains('dark')) {
             themeToggleLightIcon.classList.remove('hidden');
         } else {
@@ -341,7 +327,6 @@
             }
         });
 
-        // Efek Hover Mikro Kartu Statistik & Glass Card
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'translateY(-2px)';
@@ -352,19 +337,16 @@
             });
         });
 
-        // Pemicu Modal Form Transaksi Baru
         function openTransactionModal() {
             const modal = document.getElementById('create-transaction-modal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
-            modal.firstElementChild.classList.remove('scale-95');
-            modal.firstElementChild.classList.add('scale-100');
+            modal.firstElementChild.classList.replace('scale-95', 'scale-100');
         }
 
         function closeTransactionModal() {
             const modal = document.getElementById('create-transaction-modal');
             modal.classList.add('opacity-0', 'pointer-events-none');
-            modal.firstElementChild.classList.remove('scale-100');
-            modal.firstElementChild.classList.add('scale-95');
+            modal.firstElementChild.classList.replace('scale-100', 'scale-95');
         }
     </script>
 </body>
