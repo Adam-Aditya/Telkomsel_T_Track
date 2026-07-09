@@ -221,7 +221,7 @@
                             </td>
                             <td class="px-6 py-4 text-right whitespace-nowrap">
                                 @if($trans->status === 'Dipinjam')
-                                    <form action="{{ route('staff.transactions.return', $trans->id) }}" method="POST" class="inline-block">
+                                    <form action="{{ route('admin.transactions.return', $trans->id) }}" method="POST" class="inline-block">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="inline-flex items-center gap-1 text-[10px] font-black bg-green-600 text-white px-3 py-1.5 rounded-full hover:bg-green-700 shadow-sm transition-all">

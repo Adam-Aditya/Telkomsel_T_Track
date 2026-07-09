@@ -73,19 +73,23 @@ class TransactionController extends Controller
     }
 
     public function returnAsset($id)
-    {
-        $borrowing = Borrowing::with('details')->findOrFail($id);
-        
-        if ($borrowing->status === 'Dipinjam') {
-            // Kembalikan jumlah stok barang ke gudang semula
-            foreach ($borrowing->details as $detail) {
-                Product::where('id', $detail->product_id)->increment('stock', $detail->qty);
-            }
-            
-            // Ubah status sirkulasi menjadi 'Dikembalikan' sesuai enum database Anda
-            $borrowing->update(['status' => 'Dikembalikan']);
+{
+    $borrowing = Borrowing::with('details')->findOrFail($id);
+    
+    if ($borrowing->status === 'Dipinjam') {
+        // Kembalikan jumlah stok barang ke gudang semula
+        foreach ($borrowing->details as $detail) {
+            Product::where('id', $detail->product_id)->increment('stock', $detail->qty);
         }
-
-        return redirect()->route('admin.transactions.index')->with('success', 'Aset logistik telah berhasil dikembalikan ke gudang!');
+        
+        // Ubah status sirkulasi menjadi 'Dikembalikan' dan catat tanggal kembalinya
+        $borrowing->update([
+            'status' => 'Dikembalikan',
+            'return_date' => now() // Tambahkan ini jika Anda merekam tanggal pengembalian aset
+        ]);
     }
+
+    // 🟢 SEKARANG PERBAIKAN DI SINI: Tetap di halaman semula tanpa berpindah rute
+    return redirect()->back()->with('success', 'Aset logistik telah berhasil dikembalikan ke gudang!');
+}
 }
